@@ -101,5 +101,14 @@ class Request {
             )
         );
     }
+
+    public static function is($path){
+        $uri = substr(
+            rawurldecode(self::header('REQUEST_URI')), 
+            strlen(self::getBasePath())
+        );
+
+        return $uri === $path;
+    }
 }
 
