@@ -1,0 +1,17 @@
+{
+    "name": "dejan/paragraf",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dejan Ristic",
+            "email": "dejanr77@yahoo.co"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    }
+}
