@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-class ErrorController {
+use Core\Controller\BaseController as BaseController;
+
+class ErrorController extends BaseController{
     public function index() {
-        echo "404";
+        echo $this->render('error/404.php');
     }
 }

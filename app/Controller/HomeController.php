@@ -7,7 +7,10 @@ use Core\Request as Request;
 
 class HomeController extends BaseController{
     public function index() {
+        echo $this->render('page/index.php');
+    }
 
-        echo $this->render('home.php');
+    public function list() {
+        echo $this->render('page/list.php');
     }
 }

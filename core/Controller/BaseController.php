@@ -25,7 +25,7 @@ class BaseController {
     }
 
     private function getViewPath($view) {
-        $path = APP_PATH."/View/". $view;
+        $path = VIEW_PATH."/". $view;
 
         if(file_exists($path)) {
             return $path;

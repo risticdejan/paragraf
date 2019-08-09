@@ -4,6 +4,7 @@ define("BASE_URL","http://localhost/vhosts/paragraf");
 define("BASE_PATH",__DIR__);
 define("APP_PATH", __DIR__ . "/app");
 define("CORE_PATH", __DIR__ . "/core");
+define("VIEW_PATH", __DIR__ . "/app/View");
 
 define("DB_DNS", "mysql:host=localhost;dbname=paragraf");
 define("DB_USERNAME",  "root");

@@ -32,11 +32,15 @@ class Router {
 
     public function run(){
         $requestedMethod = Request::getMethod();
+        $counter = 0;
 
         if (isset($this->routes[$requestedMethod])) {
-            $this->handle($this->routes[$requestedMethod]);
+           $counter = $this->handle($this->routes[$requestedMethod]);
         }
         
+        if($counter === 0) {
+            $this->invoke($this->route404);
+        }
     }
 
     public function setRoute404($fn){
@@ -45,12 +49,14 @@ class Router {
 
     private function handle($routes, $quitAfterRun = false) {
         $uri = Request::getUri();
- 
+        $counter = 0;
+        
         foreach ($routes as $route) {
             // Replace all curly braces matches {} into word patterns (like Laravel)
             $route['pattern'] = preg_replace('/\/{(.*?)}/', '/(.*?)', $route['pattern']);
             // we have a match!
             if (preg_match_all('#^' . $route['pattern'] . '$#', $uri, $matches, PREG_OFFSET_CAPTURE)) {
+               
                 $matches = array_slice($matches, 1);
 
                 // Extract the matched URL parameters 
@@ -61,12 +67,12 @@ class Router {
                     return isset($match[0][0]) ? trim($match[0][0], '/') : null;
                 }, $matches, array_keys($matches));
 
-               
+                $counter++;
                 $this->invoke($route['fn'], $params);
-            } else {
-                $this->invoke($this->route404);
-            }
+            } 
         }
+
+        return $counter;
     }
 
     private function invoke($fn, $params = []) {
