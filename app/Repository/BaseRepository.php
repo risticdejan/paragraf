@@ -1,30 +1,20 @@
 <?php 
 
-namespace App\Repository\DB;
+namespace App\Repository;
 
-use Core\Database\Connaction as Connaction;
-use App\Model\Osiguranik as Osiguranik;
-use App\Repository\OsiguranikRepository as OsiguranikRepository;
+abstract class BaseRepository {
 
-class DBOsiguranikRepository implements OsiguranikRepository {
-
-    private $model;
-
-    public function __construct(){
-        $this->model = new Osiguranik();
-    }
-
-    public function getAll(): array {
+    public function getAll() {
         try {
             $conn = Connaction::getInstance();
 
-            $query = "SELECT * FROM " . $this->model->getTable();
+            $query = "SELECT * FROM " . static::$table();
 
             $stmt = $conn->prepare($query);
 
             $stmt->execute();
             
-            $stmt->setFetchMode(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, get_class($this->model));
+            $stmt->setFetchMode(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, get_class(static::$model));
 
             $res = $stmt->fetchAll();
 
@@ -40,11 +30,11 @@ class DBOsiguranikRepository implements OsiguranikRepository {
         }
     }
 
-    public function get(int $id): Osiguranik{
+    public function get(int $id){
         try {
             $conn = Connaction::getInstance();
 
-            $query = "SELECT * FROM " . $this->model->getTable() . " WHERE id=:id";
+            $query = "SELECT * FROM " . static::$table() . " WHERE id=:id";
 
             $stmt = $conn->prepare($query);
 
@@ -52,7 +42,7 @@ class DBOsiguranikRepository implements OsiguranikRepository {
 
             $stmt->execute();
             
-            $stmt->setFetchMode(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, get_class($this->model));
+            $stmt->setFetchMode(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, static::$model);
             
             $res = $stmt->fetch();
 

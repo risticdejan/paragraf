@@ -9,6 +9,7 @@ $router = new Core\Router\Router();
 \w+ = One or more word characters (a-z 0-9 _)
 */
 $router->get('/', "App\Controller\HomeController@index");
+$router->post('/prijavi', "App\Controller\HomeController@store");
 $router->get('/pregled', "App\Controller\HomeController@list");
 
 $router->setRoute404("App\Controller\ErrorController@index");;
