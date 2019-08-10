@@ -12,15 +12,15 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="puno_ime">Ime i prezime: </label>
+                        <label for="puno_ime">Ime i prezime: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="puno_ime" name="puno_ime">
                     </div>
                     <div class="form-group">
-                        <label for="datum_rodjenja">Datum rodjenja: </label>
+                        <label for="datum_rodjenja">Datum rodjenja: <span class="text-danger">*</span></label>
                         <input type="date" class="form-control" id="datum_rodjenja" name="datum_rodjenja">
                     </div>
                     <div class="form-group">
-                        <label for="broj_pasosa">Broj pasoša: </label>
+                        <label for="broj_pasosa">Broj pasoša: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="broj_pasosa" name="broj_pasosa">
                     </div>
                     <div class="form-group">
@@ -28,15 +28,15 @@
                         <input type="text" class="form-control" id="telefon" name="telefon">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email: </label>
+                        <label for="email">Email: <span class="text-danger">*</span></label>
                         <input type="email" class="form-control" id="email" name="email">
                     </div>
                     <div class="form-group">
-                        <label for="datum_polaska">Datum polaska: </label>
+                        <label for="datum_polaska">Datum polaska: <span class="text-danger">*</span></label>
                         <input type="date" class="form-control" id="datum_polaska" name="datum_polaska">
                     </div>
                     <div class="form-group">
-                        <label for="datum_dolaska">Datum dolaska: </label>
+                        <label for="datum_dolaska">Datum dolaska: <span class="text-danger">*</span></label>
                         <input type="date" class="form-control" id="datum_dolaska" name="datum_dolaska">
                     </div>
                 </div>
@@ -56,6 +56,7 @@
             </div>
             <div class="row">
             <div class="col-sm-6">
+                <p><span class="text-danger">*</span> Ova polja su obavezna.</p>
                 <button type="submit" class="btn btn-primary btn-block btn-lg">Prijavi</button>
             </div> 
             </div> 
