@@ -93,3 +93,7 @@
 a.active {
     background: #ccc;
 }
+
+#addition, #addition-button {
+    display: none;
+}

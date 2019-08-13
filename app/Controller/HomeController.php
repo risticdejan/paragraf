@@ -27,21 +27,42 @@ class HomeController extends BaseController{
     }
 
     public function store(){
-        // print_r(Request::input());
-        $validator = new Validator(Request::input(),[
-            'puno_ime' => 'required',
-            'datum_rodjenja' => 'required',
-            'broj_pasosa' => 'required',
-            'email' => 'required',
-            'datum_polaska' => 'required',
-            'datum_dolaska' => 'required',
+        $rules = [
+            'puno_ime' => 'required|alphaspace|min:4|max:64',
+            'datum_rodjenja' => 'required|date|datebefore:'.date("Y-m-d"),
+            'broj_pasosa' => 'required|passport',
+            'telefon' => 'phone',
+            'email' => 'required|email',
+            'datum_polaska' => 'required|date|dateafter:'.date("Y-m-d"),
+            'datum_dolaska' => 'required|date|dateafter:'.Request::input("datum_polaska"),
             'tip_polise' => 'required',
-        ]);
+        ];
+
+        if(Request::input('osiguranik') !== null) {
+            foreach(Request::input('osiguranik') as $k => $v){
+                $rules['osiguranik'][$k]['puno_ime'] = 'required|alphaspace|min:4|max:64';
+                $rules['osiguranik'][$k]['datum_rodjenja'] = 'required|date|datebefore:'.date("Y-m-d");
+                $rules['osiguranik'][$k]['broj_pasosa'] = 'required|passport';
+            }
+        }
+        
+        $validator = new Validator(Request::input(), $rules);
+
+        // $validator->print();
 
         if($validator->isValid()) {
-            echo  'success';
+            $this->json(
+                array(
+                    'status' => 'success',
+                )
+            );
         } else {
-            $validator->print();
+            echo $this->json(
+                array(
+                    'status' => 'failed',
+                    'error' => $validator->getErrors()
+                )
+            );
         }
 
         

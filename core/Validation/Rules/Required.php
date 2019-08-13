@@ -8,10 +8,10 @@ class Required extends Rule {
 
     private $param;
 
-    private $message = 'Ovo polje je obavezno';
+    private $message = 'Polje je obavezno';
 
-    public function __contstruct($param = ''){
-        $this->$param = $param;
+    public function __construct($param = ''){
+        $this->param = $param;
     }
 
     public function check($value="") {

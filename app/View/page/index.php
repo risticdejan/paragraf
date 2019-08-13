@@ -8,12 +8,12 @@
 
         <div class="container">
             <h3 class="font-weight-normal">Prijava putnog osiguranja</h3>
-            <form method="post" action="<?php echo BASE_URL.'/prijavi';?>">
+            <form method="post" id="prijava-forma" action="<?php echo BASE_URL.'/prijavi';?>">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="puno_ime">Ime i prezime: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="puno_ime" name="puno_ime">
+                        <input type="text" class="form-control" id="puno_ime" name="puno_ime">                   
                     </div>
                     <div class="form-group">
                         <label for="datum_rodjenja">Datum rodjenja: <span class="text-danger">*</span></label>
@@ -21,44 +21,49 @@
                     </div>
                     <div class="form-group">
                         <label for="broj_pasosa">Broj pasoša: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="broj_pasosa" name="broj_pasosa">
+                        <input type="text" class="form-control" id="broj_pasosa" name="broj_pasosa">          
                     </div>
                     <div class="form-group">
                         <label for="telefon">Telefon: </label>
-                        <input type="text" class="form-control" id="telefon" name="telefon">
+                        <input type="text" class="form-control" id="telefon" name="telefon">                   
                     </div>
                     <div class="form-group">
                         <label for="email">Email: <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="email" name="email">
+                        <input type="email" class="form-control" id="email" name="email">                
                     </div>
                     <div class="form-group">
                         <label for="datum_polaska">Datum polaska: <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="datum_polaska" name="datum_polaska">
+                        <input type="date" class="form-control" id="datum_polaska" name="datum_polaska">               
                     </div>
                     <div class="form-group">
                         <label for="datum_dolaska">Datum dolaska: <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="datum_dolaska" name="datum_dolaska">
+                        <input type="date" class="form-control" id="datum_dolaska" name="datum_dolaska">                    
                     </div>
+                    <p class="date-info"></p>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Tip putnog osiguranja: </label><br/>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline ind-opt">
                             <input class="form-check-input" type="radio" name="tip_polise" id="individualno" value="1" checked>
                             <label class="form-check-label" for="individualno">individualno</label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline gru-opt">
                             <input class="form-check-input" type="radio" name="tip_polise" id="grupno" value="2">
                             <label class="form-check-label" for="grupno">grupno</label>
                         </div>
                     </div>
+                    <div id="addition"></div>
+                    <a  href="#" id="addition-button" class="btn btn-danger">
+                        Dodaj Osiguranika
+                    </a>
                 </div>
             </div>
             <div class="row">
-            <div class="col-sm-6">
-                <p><span class="text-danger">*</span> Ova polja su obavezna.</p>
-                <button type="submit" class="btn btn-primary btn-block btn-lg">Prijavi</button>
-            </div> 
+                <div class="col-sm-6">
+                    <p><span class="text-danger">*</span> Ova polja su obavezna.</p>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">Prijavi</button>
+                </div> 
             </div> 
             </form>
         </div>
