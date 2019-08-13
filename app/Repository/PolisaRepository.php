@@ -16,31 +16,44 @@ class PolisaRepository  extends BaseRepository{
     public function create(Polisa $polisa){
         try {
             $conn = Connaction::getInstance();
-            
-            $query = "INSERT INTO  ".self::$table." "
-                ."(nosioc_id, email, datum_polaska, datum_dolaska, tip_polise) "
-                ."VALUES(:nosioc_id, :email, :datum_polaska, :datum_dolaska, :tip_polise)";
+            try {
+                $query = "INSERT INTO  ".self::$table." "
+                    ."(telefon, email, datum_polaska, datum_dolaska, tip_polise, nosioc_id) "
+                    ."VALUES(:telefon, :email, :datum_polaska, :datum_dolaska, :tip_polise, :nosioc_id)";
 
-            $stmt = $conn->prepare($query);
+                $stmt = $conn->prepare($query);
 
-            $stmt->bindParam(':nosioc_id', $polisa->nosioc->id);
-            $stmt->bindParam(':email', $polisa->email);
-            $stmt->bindParam(':datum_polaska', $polisa->datum_polaska);
-            $stmt->bindParam(':datum_dolaska', $polisa->datum_dolaska);
-            $stmt->bindParam(':tip_polise', $polisa->tip_polise);
-            $stmt->execute();
+                $stmt->bindParam(':nosioc_id', $polisa->nosioc->id);
+                $stmt->bindParam(':email', $polisa->email);
+                $stmt->bindParam(':telefon', $polisa->telefon);
+                $stmt->bindParam(':datum_polaska', $polisa->datum_polaska);
+                $stmt->bindParam(':datum_dolaska', $polisa->datum_dolaska);
+                $stmt->bindParam(':tip_polise', $polisa->tip_polise);
+                
+                $conn->beginTransaction();
 
-            $id = $conn->lastInsertId();
+                $stmt->execute();
+                $polisa->id = $conn->lastInsertId();
 
-            $stmt = null;
+                $conn->commit();
 
-            return $id;
+
+                $stmt = null;
+
+                return $polisa;
+            }catch(\PDOException $e) {
+                $conn->rollback();
+                if(DEBUG) { 
+                    exit("Query failed: " . $e->getMessage());
+                }
+                return null;
+            }
 
         } catch(\PDOException $e) {
             if(DEBUG) { 
-                exit("Connection and/or Query failed: " . $e->getMessage());
+                exit("Connection failed: " . $e->getMessage());
             }   
-            return 0;   
+            return null;   
         }
     }
 }

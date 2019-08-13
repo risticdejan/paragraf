@@ -107,6 +107,7 @@ var Prijava = {
         this.removeError(e,true);
 
         validator = this.validateForm(config.form, rules);
+
         if (validator.form() && this.dateInterval) {
             $.ajax({
                 url: url,
@@ -116,7 +117,7 @@ var Prijava = {
             }).done(function (data) {
                 
                 if(data.status === 'success'){
-                    console.log(data)
+                    window.location.href = data.url;
                 } else {
                     
                     for(let prop in data.error) {

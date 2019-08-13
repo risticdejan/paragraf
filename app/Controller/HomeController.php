@@ -8,16 +8,14 @@ use Core\Validation\Validator as Validator;
 use Core\Session as Session;
 use App\Model\Osiguranik as Osiguranik;
 use App\Model\Polisa as Polisa;
-use App\Repository\OsiguranikRepository as OsiguranikRepository;
-use App\Repository\PolisaRepository as PolisaRepository;
+use App\Service\PolisaService as PolisaService;
 
 class HomeController extends BaseController{
-    private $osiguranikRepo;
-    private $polisaRepo;
+
+    private $service;
 
     public function __construct(){
-        $this->osiguranikRepo = new OsiguranikRepository();
-        $this->polisaRepo = new PolisaRepository();
+        $this->service = new PolisaService();
     }
 
     public function index() {
@@ -48,12 +46,13 @@ class HomeController extends BaseController{
         
         $validator = new Validator(Request::input(), $rules);
 
-        // $validator->print();
-
         if($validator->isValid()) {
+            $polisa = $this->service->create(Request::input());
+
             $this->json(
                 array(
                     'status' => 'success',
+                    'url' => BASE_URL.'/pregled'
                 )
             );
         } else {
@@ -65,25 +64,6 @@ class HomeController extends BaseController{
             );
         }
 
-        
-        // $nosioc = new Osiguranik(
-        //     Request::input('puno_ime'),
-        //     Request::input('datum_rodjenja'),
-        //     Request::input('broj_pasosa'),
-        //     Request::input('telefon')
-        // );
-
-        // $polisa = new Polisa(
-        //     $this->osiguranikRepo->create($nosioc),
-        //     Request::input('email'),
-        //     Request::input('datum_polaska'),
-        //     Request::input('datum_dolaska'),
-        //     Request::input('tip_polise')
-        // );
-
-        // $polisa = $this->polisaRepo->create($polisa);
-
-        // print_r($polisa);
     }
 
     public function list() {

@@ -17,28 +17,91 @@ class OsiguranikRepository extends BaseRepository{
         try {
             $conn = Connaction::getInstance();
             
-            $query = "INSERT INTO  ".self::$table." "
-                ."(puno_ime, datum_rodjenja, broj_pasosa, telefon) "
-                ."VALUES(:puno_ime, :datum_rodjenja, :broj_pasosa, :telefon)";
+            try {
+                $query = "INSERT INTO  ".self::$table." "
+                    ."(puno_ime, datum_rodjenja, broj_pasosa) "
+                    ."VALUES(:puno_ime, :datum_rodjenja, :broj_pasosa)";
+    
+                $stmt = $conn->prepare($query);
+    
+                $stmt->bindParam(':puno_ime', $osiguranik->puno_ime);
+                $stmt->bindParam(':datum_rodjenja', $osiguranik->datum_rodjenja);
+                $stmt->bindParam(':broj_pasosa', $osiguranik->broj_pasosa);
+    
+                $conn->beginTransaction();
 
-            $stmt = $conn->prepare($query);
+                $stmt->execute();
+                $osiguranik->id = $conn->lastInsertId();
 
-            $stmt->bindParam(':puno_ime', $osiguranik->puno_ime);
-            $stmt->bindParam(':datum_rodjenja', $osiguranik->datum_rodjenja);
-            $stmt->bindParam(':broj_pasosa', $osiguranik->broj_pasosa);
-            $stmt->bindParam(':telefon', $osiguranik->telefon);
+                $conn->commit();
 
-            $stmt->execute();
-
-            $osiguranik->id = $conn->lastInsertId();
-
-            $stmt = null;
-
-            return $osiguranik;
+                $stmt = null;
+    
+                return $osiguranik;
+            }catch(\PDOException $e) {
+                $conn->rollback();
+                if(DEBUG) { 
+                    exit("Query failed: " . $e->getMessage());
+                }
+                return null;
+            }
 
         } catch(\PDOException $e) {
             if(DEBUG) { 
-                exit("Connection and/or Query failed: " . $e->getMessage());
+                exit("Connection failed: " . $e->getMessage());
+            }   
+            return null;   
+        }
+    }
+
+    public function createGrupnoOsiguraje($nosioc, $osiguranici) {
+        try {
+            $conn = Connaction::getInstance();
+            
+            try {
+                $query = "INSERT INTO  ".self::$table." "
+                    ."(puno_ime, datum_rodjenja, broj_pasosa, nosioc_id) "
+                    ."VALUES(:puno_ime, :datum_rodjenja, :broj_pasosa, :nosioc_id)";
+    
+                $stmt = $conn->prepare($query);
+             
+                $stmt->bindParam(':puno_ime', $puno_ime);
+                $stmt->bindParam(':datum_rodjenja', $datum_rodjenja);
+                $stmt->bindParam(':broj_pasosa', $broj_pasosa);
+                $stmt->bindParam(':nosioc_id', $nosioc_id);
+
+                $conn->beginTransaction();
+
+                $res = [];
+                foreach($osiguranici as &$osiguranik) {
+                    $puno_ime = $osiguranik['puno_ime'];
+                    $datum_rodjenja = $osiguranik['datum_rodjenja'];
+                    $broj_pasosa = $osiguranik['broj_pasosa'];
+                    $nosioc_id = $nosioc->id;
+
+                    $stmt->execute();
+
+                    $newOsiguranik = new Osiguranik($puno_ime, $datum_rodjenja, $broj_pasosa);
+                    $newOsiguranik->id = $conn->lastInsertId();
+
+                    $res[] = $newOsiguranik;
+                }
+                $conn->commit();  
+    
+                $stmt = null;
+    
+                return $res;
+            }catch(\PDOException $e) {
+                $conn->rollback();
+                if(DEBUG) { 
+                    exit("Query failed: " . $e->getMessage());
+                }
+                return null;
+            }
+
+        } catch(\PDOException $e) {
+            if(DEBUG) { 
+                exit("Connection failed: " . $e->getMessage());
             }   
             return null;   
         }
