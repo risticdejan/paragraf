@@ -44,13 +44,13 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Tip putnog osiguranja: </label><br/>
-                        <div class="form-check form-check-inline ind-opt">
-                            <input class="form-check-input" type="radio" name="tip_polise" id="individualno" value="1" checked>
-                            <label class="form-check-label" for="individualno">individualno</label>
+                        <div class="form-check form-check-inline ind-opt mr-5">
+                            <input class="form-check-input radio" type="radio" name="tip_polise" id="individualno" value="1" checked>
+                            <label class="form-check-label radio" for="individualno">individualno</label>
                         </div>
                         <div class="form-check form-check-inline gru-opt">
-                            <input class="form-check-input" type="radio" name="tip_polise" id="grupno" value="2">
-                            <label class="form-check-label" for="grupno">grupno</label>
+                            <input class="form-check-input radio" type="radio" name="tip_polise" id="grupno" value="2">
+                            <label class="form-check-label radio" for="grupno">grupno</label>
                         </div>
                     </div>
                     <div id="addition"></div>

@@ -85,8 +85,8 @@ var Prijava = {
             $dateDolaska = $(config.dateDolaska),
             $form = $(config.form);
 
-        $indOpition.on("click", $.proxy(this.hideAdditon,this));
-        $gruOpition.on("click", $.proxy(this.showAddition,this));   
+        $indOpition.on("click",'.radio', $.proxy(this.hideAdditon,this));
+        $gruOpition.on("click",'.radio', $.proxy(this.showAddition,this));   
         $additionButton.on("click", $.proxy(this.add, this));
         $addition.on("click","a.removeItem", this.remove);
         $addition.on("keyup input","input", this.updateData);
