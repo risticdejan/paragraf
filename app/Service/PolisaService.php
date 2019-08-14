@@ -7,6 +7,8 @@ use App\Model\Polisa as Polisa;
 use App\Repository\OsiguranikRepository as OsiguranikRepository;
 use App\Repository\PolisaRepository as PolisaRepository;
 
+use Dompdf\Dompdf;
+
 class PolisaService {
 
     private $osiguranikRepo;
@@ -39,10 +41,13 @@ class PolisaService {
             if(!empty($request['osiguranik'])) {
                 $osiguranici = $this->osiguranikRepo
                     ->createGrupnoOsiguraje($nosioc, $request['osiguranik']);
+                $polisa->nosioc->setOsiguranici($osiguranici);
             }
+
+            return $this->get($polisa->id);
         }
 
-        return $polisa;
+        return null;
     }
 
     public function getAll($col = 'datum_unosa', $order = 'desc'){
@@ -50,6 +55,20 @@ class PolisaService {
         $order = $this->cleanOrderParametar($order);
 
         return $this->polisaRepo->getAll($col, $order);
+    }
+
+    public function get($id){
+        return $this->polisaRepo->get($id);
+    }
+
+    public function createPdf($html) {
+        $dompdf = new Dompdf();
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+
+        return $dompdf->output();
     }
 
     private function cleanColParametar($col){

@@ -27,6 +27,10 @@ class Osiguranik {
         return $this->osiguranici;
     }
 
+    public function setOsiguranici($osiguranici){
+        $this->osiguranici = $osiguranici;
+    }
+
     public function addOsiguranika(Osiguranik $osiguranik){
         $this->osiguranici[] = $osiguranik;
     }  

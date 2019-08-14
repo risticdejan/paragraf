@@ -47,6 +47,18 @@ class HomeController extends BaseController{
         if($validator->isValid()) {
             $polisa = $this->service->create(Request::input());
 
+            if ($polisa) {
+                $html = $this->render('prijava.php', ['polisa' => $polisa]);
+                $pdf = $this->service->createPdf($html);
+
+                file_put_contents(BASE_PATH.'/test.pdf', $pdf);
+
+                $this->json([
+                    'status' => 'success',
+                    'url' => BASE_URL.'/pregled'
+                ]);
+            } 
+
             $this->json([
                 'status' => 'success',
                 'url' => BASE_URL.'/pregled'
@@ -67,7 +79,6 @@ class HomeController extends BaseController{
             ? 'asc' : 'desc';
 
         $polise = $this->service->getAll($col, $order);
-
 
         echo $this->render('page/list.php',[
             'polise' => $polise,
