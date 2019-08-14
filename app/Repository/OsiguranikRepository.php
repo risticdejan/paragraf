@@ -5,10 +5,10 @@ namespace App\Repository;
 use Core\Database\Connaction as Connaction;
 use App\Model\Osiguranik as Osiguranik;
 
-class OsiguranikRepository extends BaseRepository{
+class OsiguranikRepository{
 
-    private static $model = Osiguranik::class;
-    private static $table = 'osiguranici';
+    protected static $model = Osiguranik::class;
+    protected static $table = 'osiguranici';
 
     public function __construct(){
     }
@@ -19,14 +19,16 @@ class OsiguranikRepository extends BaseRepository{
             
             try {
                 $query = "INSERT INTO  ".self::$table." "
-                    ."(puno_ime, datum_rodjenja, broj_pasosa) "
-                    ."VALUES(:puno_ime, :datum_rodjenja, :broj_pasosa)";
+                    ."(puno_ime, datum_rodjenja, broj_pasosa, email, telefon) "
+                    ."VALUES(:puno_ime, :datum_rodjenja, :broj_pasosa, :email, :telefon)";
     
                 $stmt = $conn->prepare($query);
     
                 $stmt->bindParam(':puno_ime', $osiguranik->puno_ime);
                 $stmt->bindParam(':datum_rodjenja', $osiguranik->datum_rodjenja);
                 $stmt->bindParam(':broj_pasosa', $osiguranik->broj_pasosa);
+                $stmt->bindParam(':email',$osiguranik->email);
+                $stmt->bindParam(':telefon', $osiguranik->telefon);
     
                 $conn->beginTransaction();
 
@@ -107,5 +109,76 @@ class OsiguranikRepository extends BaseRepository{
         }
     }
 
+    public function getNosioca($id) {
+        try {
+            $conn = Connaction::getInstance();
 
+            $query = "SELECT 
+                    o.id as id,
+                    o.puno_ime AS puno_ime,
+                    DATE_FORMAT(o.datum_rodjenja, '%d/%m/%Y')  AS datum_rodjenja,
+                    o.broj_pasosa AS broj_pasosa,
+                    o.telefon AS telefon,
+                    o.email AS email 
+                    FROM " . self::$table . " as o
+                    WHERE id=:id AND nosioc_id IS NULL";
+
+            $stmt = $conn->prepare($query);
+
+            $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            
+            $stmt->setFetchMode(\PDO::FETCH_OBJ);
+            
+            $res = $stmt->fetch();
+
+            $stmt = null;
+
+            return $res;
+        } catch(\PDOException $e) {
+            if(DEBUG) { 
+                exit("Connection and/or Query failed: " . $e->getMessage());
+            }
+
+            return null;      
+        }
+    }
+
+    public function getOsiguranike($id) {
+        try {
+            $conn = Connaction::getInstance();
+
+            $query = "SELECT 
+                    o2.puno_ime as puno_ime,
+                    DATE_FORMAT(o2.datum_rodjenja, '%d/%m/%Y')  AS datum_rodjenja,
+                    o2.broj_pasosa as broj_pasosa
+                FROM 
+                    " . self::$table . "  AS o1 
+                INNER JOIN 
+                    " . self::$table . "  AS o2  
+                ON o1.id = o2.nosioc_id
+                WHERE o1.id=:id";
+
+            $stmt = $conn->prepare($query);
+
+            $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            
+            $stmt->setFetchMode(\PDO::FETCH_OBJ);
+
+            $res = $stmt->fetchAll();
+
+            $stmt = null;
+
+            return $res;
+        } catch(\PDOException $e) {
+            if(DEBUG) { 
+                exit("Connection and/or Query failed: " . $e->getMessage());
+            }
+
+            return null;      
+        }
+    }
 }

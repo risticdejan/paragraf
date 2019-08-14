@@ -21,17 +21,17 @@ class PolisaService {
         $nosioc = new Osiguranik(
             $request['puno_ime'],
             $request['datum_rodjenja'],
-            $request['broj_pasosa']
+            $request['broj_pasosa'],
+            $request['email'],
+            empty($request['telefon'])? null : $request['telefon'] 
         );
 
         if(($nosioc = $this->osiguranikRepo->create($nosioc)) !== null){
             $polisa = new Polisa(
                 $nosioc,
-                $request['email'],
                 $request['datum_polaska'],
                 $request['datum_dolaska'],
-                empty($request['osiguranik']) ? 1 : 2,
-                $request['telefon']
+                $request['tip_polise']
             );
 
             $polisa = $this->polisaRepo->create($polisa);
@@ -43,6 +43,10 @@ class PolisaService {
         }
 
         return $polisa;
+    }
+
+    public function getAll(){
+        return $this->polisaRepo->getAll();
     }
 }
 

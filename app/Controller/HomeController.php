@@ -19,8 +19,6 @@ class HomeController extends BaseController{
     }
 
     public function index() {
-        Session::set('dejan','majstor');
-
         echo $this->render('page/index.php');
     }
 
@@ -49,25 +47,24 @@ class HomeController extends BaseController{
         if($validator->isValid()) {
             $polisa = $this->service->create(Request::input());
 
-            $this->json(
-                array(
-                    'status' => 'success',
-                    'url' => BASE_URL.'/pregled'
-                )
-            );
+            $this->json([
+                'status' => 'success',
+                'url' => BASE_URL.'/pregled'
+            ]);
         } else {
-            echo $this->json(
-                array(
-                    'status' => 'failed',
-                    'error' => $validator->getErrors()
-                )
-            );
+            $this->json([
+                'status' => 'failed',
+                'error' => $validator->getErrors()
+            ]);
         }
 
     }
 
     public function list() {
-        Session::destroy();
-        echo $this->render('page/list.php');
+        $polise = $this->service->getAll();
+
+        echo $this->render('page/list.php',[
+            'polise' => $polise
+        ]);
     }
 }
