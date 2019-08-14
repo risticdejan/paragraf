@@ -1,6 +1,5 @@
 <?php 
 // print_r($nosioc);
-// print_r($osiguranici);
 ?>
 <!doctype html>
 <html lang="en">
@@ -29,8 +28,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Dodatna osigurana lica:</h4>
-                        <?php if(has($osiguranici)) {
-                            foreach($osiguranici as $osiguranik) {?>
+                        <?php if(has($nosioc->getOsiguranici())) {
+                            foreach($nosioc->getOsiguranici() as $osiguranik) {?>
                         <p class="card-text mb-2">
                             <div><b>ime i prezime: </b><?php echo out($osiguranik->puno_ime);?> </div>
                             <div><b>datum rodjenja: </b><?php echo out($osiguranik->datum_rodjenja);?> </div>

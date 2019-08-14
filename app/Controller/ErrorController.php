@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Core\Controller\BaseController as BaseController;
+use Core\Controller\BaseController as BaseController;       
 
 class ErrorController extends BaseController{
     public function index() {

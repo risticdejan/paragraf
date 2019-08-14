@@ -115,8 +115,8 @@ var Prijava = {
                 type: 'POST',
                 dataType: 'JSON'
             }).done(function (data) {
-                
                 if(data.status === 'success'){
+                    $form[0].reset();
                     window.location.href = data.url;
                 } else {
                     

@@ -10,6 +10,7 @@ class Polisa {
     public $datum_dolaska;
     public $tip_polise;
     public $datum_unosa;
+    private $broj_dana = 0;
 
     public function __construct(
         $nosioc = null, $datum_polaska = '',
@@ -21,4 +22,11 @@ class Polisa {
         $this->tip_polise = $tip_polise;
     }
 
+    public function getBrojDana(){
+        return $this->broj_dana;
+    }
+
+    public function setBrojDana($broj){
+        return $this->broj_dana = $broj;
+    }
 }

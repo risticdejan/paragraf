@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Core\Database\Connaction as Connaction;
 use App\Model\Polisa as Polisa;
+use App\Model\Osiguranik as Osiguranik;
 
 class PolisaRepository{
 
@@ -18,7 +19,8 @@ class PolisaRepository{
             $conn = Connaction::getInstance();
 
             $query = "SELECT 
-                        p.nosioc_id AS nosioc_id,
+                        p.id as polisa_id,
+                        o.id AS nosioc_id,
                         o.puno_ime AS puno_ime,
                         DATE_FORMAT(o.datum_rodjenja, '%d/%m/%Y')  AS datum_rodjenja,
                         o.broj_pasosa AS broj_pasosa,
@@ -38,14 +40,32 @@ class PolisaRepository{
             $stmt = $conn->prepare($query);
 
             $stmt->execute();
-            
-            $stmt->setFetchMode(\PDO::FETCH_OBJ);
 
-            $res = $stmt->fetchAll();
+            $polise = [];
 
+            while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
+                $nosioc = new Osiguranik();
+                $nosioc->id = $row->nosioc_id;
+                $nosioc->puno_ime = $row->puno_ime;
+                $nosioc->datum_rodjenja = $row->datum_rodjenja;
+                $nosioc->broj_pasosa = $row->broj_pasosa;
+                $nosioc->email = $row->email;
+                $nosioc->telefon = $row->telefon;
+
+                $polisa = new Polisa();
+                $polisa->nosioc = $nosioc;
+                $polisa->id = $row->polisa_id;
+                $polisa->datum_polaska = $row->datum_polaska;
+                $polisa->datum_dolaska = $row->datum_dolaska;
+                $polisa->tip_polise = $row->tip_polise;
+                $polisa->setBrojDana($row->broj_dana);
+                $polisa->datum_unosa = $row->datum_unosa;
+
+                $polise[] = $polisa;
+            }
             $stmt = null;
 
-            return $res;
+            return $polise;
         } catch(\PDOException $e) {
             if(DEBUG) { 
                 exit("Connection and/or Query failed: " . $e->getMessage());

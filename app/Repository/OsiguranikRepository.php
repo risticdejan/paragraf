@@ -129,13 +129,20 @@ class OsiguranikRepository{
 
             $stmt->execute();
             
-            $stmt->setFetchMode(\PDO::FETCH_OBJ);
-            
-            $res = $stmt->fetch();
+            $row = $stmt->fetch(\PDO::FETCH_OBJ);
+
+            $osiguranik = new Osiguranik();
+
+            $osiguranik->id = $row->id;
+            $osiguranik->puno_ime = $row->puno_ime;
+            $osiguranik->datum_rodjenja = $row->datum_rodjenja;
+            $osiguranik->broj_pasosa = $row->broj_pasosa;
+            $osiguranik->email = $row->email;
+            $osiguranik->telefon = $row->telefon;
 
             $stmt = null;
 
-            return $res;
+            return $osiguranik;
         } catch(\PDOException $e) {
             if(DEBUG) { 
                 exit("Connection and/or Query failed: " . $e->getMessage());
@@ -150,9 +157,15 @@ class OsiguranikRepository{
             $conn = Connaction::getInstance();
 
             $query = "SELECT 
-                    o2.puno_ime as puno_ime,
-                    DATE_FORMAT(o2.datum_rodjenja, '%d/%m/%Y')  AS datum_rodjenja,
-                    o2.broj_pasosa as broj_pasosa
+                    o1.id as id,
+                    o1.puno_ime AS puno_ime,
+                    DATE_FORMAT(o1.datum_rodjenja, '%d/%m/%Y')  AS datum_rodjenja,
+                    o1.broj_pasosa AS broj_pasosa,
+                    o1.telefon AS telefon,
+                    o1.email AS email,
+                    o2.puno_ime as osiguranik_puno_ime,
+                    DATE_FORMAT(o2.datum_rodjenja, '%d/%m/%Y')  AS osiguranik_datum_rodjenja,
+                    o2.broj_pasosa as osiguranik_broj_pasosa
                 FROM 
                     " . self::$table . "  AS o1 
                 INNER JOIN 
@@ -165,14 +178,26 @@ class OsiguranikRepository{
             $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 
             $stmt->execute();
-            
-            $stmt->setFetchMode(\PDO::FETCH_OBJ);
 
-            $res = $stmt->fetchAll();
+            $res = [];
+            $nosioc = new Osiguranik();
+            while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
+                $nosioc->id = $row->id;
+                $nosioc->puno_ime = $row->puno_ime;
+                $nosioc->datum_rodjenja = $row->datum_rodjenja;
+                $nosioc->broj_pasosa = $row->broj_pasosa;
+                $nosioc->email = $row->email;
+                $nosioc->telefon = $row->telefon;
+                $osiguranik = new Osiguranik();
+                $osiguranik->puno_ime = $row->osiguranik_puno_ime;
+                $osiguranik->datum_rodjenja = $row->osiguranik_datum_rodjenja;
+                $osiguranik->broj_pasosa = $row->osiguranik_broj_pasosa;
+                $nosioc->addOsiguranika($osiguranik);
+            }
 
             $stmt = null;
 
-            return $res;
+            return $nosioc;
         } catch(\PDOException $e) {
             if(DEBUG) { 
                 exit("Connection and/or Query failed: " . $e->getMessage());

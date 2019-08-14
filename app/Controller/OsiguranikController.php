@@ -22,12 +22,10 @@ class OsiguranikController extends BaseController{
     }
 
     public function grupno($id) {
-        $nosioc = $this->service->getNosioca($id);
-        $osiguranici = $this->service->getOsiguranike($nosioc->id);
+        $nosioc = $this->service->getNosiocaSaOsiguranicima($id);
 
         echo $this->render('page/grupno.php',[
-            'nosioc' => $nosioc,
-            'osiguranici' => $osiguranici
+            'nosioc' => $nosioc
         ]);
     }
 }

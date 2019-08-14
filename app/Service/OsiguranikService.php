@@ -17,7 +17,7 @@ class OsiguranikService {
         return $this->osiguranikRepo->getNosioca($id);
     }
 
-    public function getOsiguranike($id) {
+    public function getNosiocaSaOsiguranicima($id) {
         return $this->osiguranikRepo->getOsiguranike($id);
     }
 }

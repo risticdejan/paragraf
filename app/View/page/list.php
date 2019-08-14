@@ -32,19 +32,19 @@
                         <tr>
                             <td><?php echo out($polisa->datum_unosa);?></td>
                             <td>
-                                <a href="<?php echo url('/nosioc/'.$polisa->nosioc_id) ;?>">
-                                <?php echo out($polisa->puno_ime);?>
+                                <a href="<?php echo url('/nosioc/'.$polisa->nosioc->id) ;?>">
+                                <?php echo out($polisa->nosioc->puno_ime);?>
                                 </a>
                             </td>
-                            <td><?php echo out($polisa->datum_rodjenja)?></td>
-                            <td><?php echo out($polisa->broj_pasosa);?></td>
-                            <td><?php echo out($polisa->email);?></td>
+                            <td><?php echo out($polisa->nosioc->datum_rodjenja)?></td>
+                            <td><?php echo out($polisa->nosioc->broj_pasosa);?></td>
+                            <td><?php echo out($polisa->nosioc->email);?></td>
                             <td><?php echo out($polisa->datum_polaska);?></td>
                             <td><?php echo out($polisa->datum_dolaska);?></td>
-                            <td><?php echo out($polisa->broj_dana);?></td>
+                            <td><?php echo out($polisa->getBrojDana());?></td>
                             <td>
                             <?php if($polisa->tip_polise == 'grupno'){?>
-                                <a href="<?php echo url('/grupno/'.$polisa->nosioc_id) ;?>">
+                                <a href="<?php echo url('/grupno/'.$polisa->nosioc->id) ;?>">
                                 <?php echo out($polisa->tip_polise);?>
                                 </a>
                             <?php

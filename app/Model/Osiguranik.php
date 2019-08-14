@@ -10,6 +10,7 @@ class Osiguranik {
     public $broj_pasosa;
     public $telefon;
     public $email;
+    private $osiguranici = [];
 
     public function __construct(
         $puno_ime = '', $datum_rodjenja = '', 
@@ -22,6 +23,12 @@ class Osiguranik {
         $this->telefon = $telefon;
     }
 
-    
+    public function getOsiguranici() {
+        return $this->osiguranici;
+    }
+
+    public function addOsiguranika(Osiguranik $osiguranik){
+        $this->osiguranici[] = $osiguranik;
+    }  
 }
 
