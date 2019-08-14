@@ -61,10 +61,18 @@ class HomeController extends BaseController{
     }
 
     public function list() {
-        $polise = $this->service->getAll();
+        $col = !empty(Request::input('col')) 
+            ? Request::input('col') : 'datum_unosa';
+        $order = (Request::input('order') == 'desc')
+            ? 'asc' : 'desc';
+
+        $polise = $this->service->getAll($col, $order);
+
 
         echo $this->render('page/list.php',[
-            'polise' => $polise
+            'polise' => $polise,
+            'col' => $col,
+            'order' => $order
         ]);
     }
 }

@@ -14,7 +14,7 @@ class PolisaRepository{
     public function __construct(){
     }
 
-    public function getAll() {
+    public function getAll($col, $order) {
         try {
             $conn = Connaction::getInstance();
 
@@ -35,7 +35,7 @@ class PolisaRepository{
                         polise AS p
                             INNER JOIN
                         osiguranici AS o ON p.nosioc_id = o.id
-                    ORDER BY datum_unosa DESC";
+                    ORDER BY " . $col . " " . $order;
 
             $stmt = $conn->prepare($query);
 

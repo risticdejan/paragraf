@@ -97,3 +97,12 @@ a.active {
 #addition, #addition-button {
     display: none;
 }
+
+
+span.desc {
+    transform: rotate(-90deg);
+}
+
+span.asc {
+    transform: rotate(90deg);
+}

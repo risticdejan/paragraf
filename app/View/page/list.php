@@ -15,16 +15,60 @@
             <div class="table-responsive">
                 <table class="table table-hover table-sm">
                     <thead class="thead-light">
-                        <tr>
-                            <th>datum unosa</th>
-                            <th>ime i prezime</th>
-                            <th>datum rodjenja</th>
-                            <th>broj pasoša</th>
-                            <th>email</th>
-                            <th>datum polaska</th>
-                            <th>datum dolaska</th>
-                            <th>broj dana</th>
-                            <th>tip</th>
+                        <tr id='sort-heading' data-sort-url="<?php echo url('/pregled');?>">
+                            <th data-sort-col="datum_unosa">
+                                datum unosa 
+                                <?php if($col == 'datum_unosa'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
+                            <th data-sort-col="puno_ime">
+                                ime i prezime 
+                                <?php if($col == 'puno_ime'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            <th data-sort-col="datum_rodjenja">
+                                datum rodjenja
+                                <?php if($col == 'datum_rodjenja'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
+                            <th data-sort-col="broj_pasosa">
+                                broj pasoša
+                                <?php if($col == 'broj_pasosa'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
+                            <th data-sort-col="email">
+                                email
+                                <?php if($col == 'email'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
+                            <th data-sort-col="datum_polaska">
+                                datum polaska
+                                <?php if($col == 'datum_polaska'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
+                            <th data-sort-col="datum_dolaska">
+                                datum dolaska
+                                <?php if($col == 'datum_dolaska'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
+                            <th data-sort-col="broj_dana">
+                                broj dana
+                                <?php if($col == 'broj_dana'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
+                            <th data-sort-col="tip_polise">
+                                tip polise
+                                <?php if($col == 'tip_polise'){?>
+                                <span data-sort-val="<?php echo $order;?>" class="float-right <?php echo $order;?>">&#60;</span>
+                                <?php }?>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +107,10 @@
             <?php } ?>
         </div>
         <?php include_once VIEW_PATH.'/layout/footer.php';?>
+
+        <script>
+            Lista.init();
+        </script>
     </body>
 </html>
 

@@ -45,8 +45,25 @@ class PolisaService {
         return $polisa;
     }
 
-    public function getAll(){
-        return $this->polisaRepo->getAll();
+    public function getAll($col = 'datum_unosa', $order = 'desc'){
+        $col = $this->cleanColParametar($col);
+        $order = $this->cleanOrderParametar($order);
+
+        return $this->polisaRepo->getAll($col, $order);
+    }
+
+    private function cleanColParametar($col){
+        $col = strtolower(trim($col));
+        return (in_array($col,[
+            'puno_ime', 'datum_rodjenj', 'broj_pasosa',
+            'telefon', 'email', 'datum_polaska', 'datum_dolaska',
+            'broj_dana', 'datum_unosa', 'tip_polise'
+        ])) ? $col : 'datum_unosa';
+    }
+
+    private function cleanOrderParametar($order){
+        $order = strtolower(trim($order));
+        return (in_array($order,['asc','desc'])) ? $order : 'datum_unosa';
     }
 }
 

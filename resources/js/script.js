@@ -306,8 +306,6 @@ var Prijava = {
     }
 }
 
-Prijava.init();
-
 var Osiguranik = {
     pos: 0,
     data: [],
@@ -428,5 +426,34 @@ var Template = {
         temp += '</div>';
 
         return temp;
+    }
+}
+
+var Lista = {
+
+    config: {
+        sort: '#sort-heading'
+    },
+
+    init: function (config) {
+        $.extend(this.config, config);
+
+        this.bindEvents();
+    },
+
+    bindEvents: function() {
+        var config = this.config
+            $sort = $(config.sort),
+            url = $sort.data('sort-url');
+            sort = '',
+            value = '';
+
+        $sort.on('click','th', function(e) {
+            let $this = $(this);
+            sort = $this.data('sort-col');
+            value = $this.find('span').data('sort-val') || 'desc';
+            window.location.href = url + '?col=' + sort
+                + '&order=' + value;
+        })
     }
 }

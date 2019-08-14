@@ -8,7 +8,7 @@
 
         <div class="container">
             <h3 class="font-weight-normal">Prijava putnog osiguranja</h3>
-            <form method="post" id="prijava-forma" action="<?php echo BASE_URL.'/prijavi';?>">
+            <form method="post" id="prijava-forma" action="<?php echo url('/prijavi');?>">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -68,6 +68,10 @@
             </form>
         </div>
         <?php include_once VIEW_PATH.'/layout/footer.php';?>
+
+        <script>
+            Prijava.init();
+        </script>
     </body>
 </html>
 
