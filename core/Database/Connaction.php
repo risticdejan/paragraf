@@ -21,6 +21,8 @@ class Connaction {
         $conn = new \PDO(DB_DNS, DB_USERNAME, DB_PASSWORD);
 
         $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+        $conn->exec("set names utf8");
         
         return $conn;     
     }

@@ -10,6 +10,14 @@ define("DB_DNS", "mysql:host=localhost;dbname=paragraf");
 define("DB_USERNAME",  "root");
 define("DB_PASSWORD", "");
 
+define("MAIL_HOST","smtp.gmail.com");
+define("MAIL_PORT","587");
+define("MAIL_USERNAME","example@gmail.com");
+define("MAIL_PASSWORD","story26okt77");
+define("MAIL_ENCRYPTION","tls");
+define("MAIL_FROM_ADDRESS","example@gmail.com");
+define("MAIL_FROM_NAME","example");
+
 define('ENVIRONMENT','development');
 
 switch (ENVIRONMENT)

@@ -2,6 +2,9 @@
 <html lang="en">
     <head>
         <?php include_once VIEW_PATH.'/layout/head.php';?>
+        <style>
+        *{ font-family: DejaVu Sans; font-size: 12px;}
+        </style>
     </head>
     <body>
         <div class="container">
@@ -29,11 +32,12 @@
             <div class="mb-3">
                 <h5>Dodatno osigurana lica: </h5>
                 <?php foreach($polisa->nosioc->getOsiguranici() as $osiguranik) { ?>
-                <p class="mb-2">
+                <p>
                     <div><b>ime i prezime: </b><?php echo out($osiguranik->puno_ime);?> </div>
                     <div><b>datum rodjenja: </b><?php echo out($osiguranik->datum_rodjenja);?> </div>
                     <div><b>broj pasoša: </b><?php echo out($osiguranik->broj_pasosa);?> </div>
-                </p>
+                    <br>
+                </p>     
                 <?php } ?>
             </div>
             <?php } ?>

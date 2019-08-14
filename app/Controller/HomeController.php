@@ -9,6 +9,7 @@ use Core\Session as Session;
 use App\Model\Osiguranik as Osiguranik;
 use App\Model\Polisa as Polisa;
 use App\Service\PolisaService as PolisaService;
+use Core\Email as Email;
 
 class HomeController extends BaseController{
 
@@ -51,12 +52,13 @@ class HomeController extends BaseController{
                 $html = $this->render('prijava.php', ['polisa' => $polisa]);
                 $pdf = $this->service->createPdf($html);
 
-                file_put_contents(BASE_PATH.'/test.pdf', $pdf);
-
-                $this->json([
-                    'status' => 'success',
-                    'url' => BASE_URL.'/pregled'
-                ]);
+                Email::send(
+                    $polisa->nosioc->email,
+                    "pragraf:prijava", 
+                    $this->render('email/prijava.php',['polisa' => $polisa]), 
+                    $pdf,
+                    'prijava.pdf'
+                );
             } 
 
             $this->json([
