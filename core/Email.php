@@ -36,9 +36,9 @@ class Email {
 
             $instance->mail->send();
         } catch (Exception $e) {
-            if(DEBUG) { 
-                exit("Message could not be sent. Mailer Error: {$instance->mail->ErrorInfo}");
-            }
+            // if(DEBUG) { 
+            //     exit("Message could not be sent. Mailer Error: {$instance->mail->ErrorInfo}");
+            // }
         }
     }
 }
