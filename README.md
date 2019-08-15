@@ -7,6 +7,7 @@
 -   Napravi bazu i importuj paragraf.sql,
 -   pokreni ovu komandu `composer install`
 -   Podesi konstante u config.php fajlu a koje se izmedju ostalog odnose na podešavanja baze, root url i email-a
+-   Takodje pravilno podesiti ENVIRONMENT konstantu u config.php fajlu.
 
 
 
