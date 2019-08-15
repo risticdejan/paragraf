@@ -8,7 +8,7 @@
 
         <div class="container">
             <h3 class="font-weight-normal">Prijava putnog osiguranja</h3>
-            <form method="post" id="prijava-forma" action="<?php echo url('/prijavi');?>">
+            <form autocomplete="off" method="post" id="prijava-forma" action="<?php echo url('/prijavi');?>">
             <input type="hidden" name="token" value="<?php echo \Core\Session::get('token');?>">
             <div class="row">
                 <div class="col-sm-6">
