@@ -11,12 +11,12 @@ define("DB_USERNAME",  "root");
 define("DB_PASSWORD", "");
 
 define("MAIL_HOST","smtp.gmail.com");
-define("MAIL_PORT","587");
-define("MAIL_USERNAME","dejanrr77@gmail.com");
-define("MAIL_PASSWORD","story26okt77");
+define("MAIL_PORT","465");
+define("MAIL_USERNAME","test@example.com");
+define("MAIL_PASSWORD","???");
 define("MAIL_ENCRYPTION","tls");
-define("MAIL_FROM_ADDRESS","dejanrr77@gmail.com");
-define("MAIL_FROM_NAME","dejan");
+define("MAIL_FROM_ADDRESS","test@example.com");
+define("MAIL_FROM_NAME","paragraf");
 
 define('ENVIRONMENT','development');
 
