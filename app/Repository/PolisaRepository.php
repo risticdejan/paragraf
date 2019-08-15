@@ -102,7 +102,7 @@ class PolisaRepository{
                 polise AS p
                     INNER JOIN
                 osiguranici AS o1 ON p.nosioc_id = o1.id
-                    INNER JOIN
+                    LEFT JOIN
                 osiguranici AS o2 ON o1.id = o2.nosioc_id
             WHERE
                 p.id = :id
@@ -131,7 +131,9 @@ class PolisaRepository{
                 $osiguranik->datum_rodjenja = $row->osiguranik_datum_rodjenja;
                 $osiguranik->broj_pasosa = $row->osiguranik_broj_pasosa;
 
-                $nosioc->addOsiguranika($osiguranik);
+                if($osiguranik->id){
+                    $nosioc->addOsiguranika($osiguranik);
+                }  
 
                 $polisa->nosioc = $nosioc;
                 $polisa->id = $row->polisa_id;

@@ -9,6 +9,12 @@
     <body>
         <?php include_once VIEW_PATH.'/layout/navbar.php';?>
 
+        <?php 
+            if(\Core\Session::has('toast')) { 
+                include_once VIEW_PATH.'/layout/toast.php';
+            } 
+        ?>
+
         <div class="container">
             <h3 class="font-weight-normal">Pregled putnih osiguranja</h3>
             <?php if(has($polise)) {;?>
@@ -110,6 +116,7 @@
 
         <script>
             Lista.init();
+            $('.toast').toast('show');
         </script>
     </body>
 </html>

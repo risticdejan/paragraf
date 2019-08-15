@@ -72,7 +72,17 @@ class HomeController extends BaseController{
                     $pdf,
                     'prijava.pdf'
                 );
-            } 
+
+                Session::set('toast', [
+                    'className' => 'success',
+                    'message' => 'Uspešno je prijavljeno novo putno osiguranje'
+                ]);
+            } else {
+                Session::set('toast', [
+                    'className' => 'danger',
+                    'message' => 'Nažalost, prijava nije uspela'
+                ]);
+            }
 
             $this->json([
                 'status' => 'success',
