@@ -3,7 +3,7 @@ $.validator.addMethod("phone", function (value, element) {
 }, "Telefonski broj nije ispravan");
 
 $.validator.addMethod("alphaspace", function (value, element) {
-    return this.optional(element) || /^[\p{L}\s]+$/uim.test(value);
+    return this.optional(element) || /^[a-žA-Ž ]+$/uim.test(value);
 }, "Polje je može da sadrži samo slova");
 
 $.validator.addMethod("passport", function (value, element) {

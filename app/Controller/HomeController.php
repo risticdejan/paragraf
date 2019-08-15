@@ -62,6 +62,8 @@ class HomeController extends BaseController{
             $polisa = $this->service->create(Request::input());
 
             if ($polisa) {
+                // Session::set('polisa', $polisa);
+                // $this->curl_post_async(BASE_URL.'/posalji',[]);
                 $html = $this->render('prijava.php', ['polisa' => $polisa]);
                 $pdf = $this->service->createPdf($html);
 
@@ -111,4 +113,22 @@ class HomeController extends BaseController{
             'order' => $order
         ]);
     }
+
+    // public function email(){
+    //     if(Session::has('polisa')){
+    //         $polisa = Session::get('polisa');
+    //         Session::clear('polisa');
+
+    //         $html = $this->render('prijava.php', ['polisa' => $polisa]);
+    //         $pdf = $this->service->createPdf($html);
+
+    //         Email::send(
+    //             $polisa->nosioc->email,
+    //             "pragraf:prijava", 
+    //             $this->render('email/prijava.php',['polisa' => $polisa]), 
+    //             $pdf,
+    //             'prijava.pdf'
+    //         );
+    //     }
+    // }
 }

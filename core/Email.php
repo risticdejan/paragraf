@@ -10,8 +10,9 @@ class Email {
 
     public function __construct(){
         $this->mail = new PHPMailer(true);
-        // $this->mail->SMTPDebug = 2;                               
-        $this->mail->isSMTP();                                     
+        if(DEBUG){
+            $this->mail->isSMTP();                                     
+        }                              
         $this->mail->Host = MAIL_HOST;  
         $this->mail->SMTPAuth = true;                                   
         $this->mail->Username = MAIL_USERNAME;                   

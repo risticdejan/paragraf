@@ -24,15 +24,8 @@ class Session {
 
     public static function get($key) {
         if(self::has($key)) {
-            if(is_array($_SESSION[$key])) {
-                foreach($_SESSION[$key] as $k => $v){
-                    $tmp[$k] = htmlspecialchars($v);
-                }
-                return $tmp;
-            }
-            return htmlspecialchars($_SESSION[$key]);
+            return $_SESSION[$key];
         }
-
         return '';
     }
 
