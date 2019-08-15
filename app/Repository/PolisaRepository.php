@@ -19,23 +19,25 @@ class PolisaRepository{
             $conn = Connaction::getInstance();
 
             $query = "SELECT 
-                        p.id as polisa_id,
-                        o.id AS nosioc_id,
-                        o.puno_ime AS puno_ime,
-                        DATE_FORMAT(o.datum_rodjenja, '%d/%m/%Y')  AS datum_rodjenja,
-                        o.broj_pasosa AS broj_pasosa,
-                        o.telefon AS telefon,
-                        o.email AS email,
-                        DATE_FORMAT(p.datum_polaska, '%d/%m/%Y') AS datum_polaska,
-                        DATE_FORMAT(p.datum_dolaska, '%d/%m/%Y') AS datum_dolaska,
-                        DATEDIFF(p.datum_dolaska, p.datum_polaska) AS broj_dana,
-                        DATE_FORMAT(p.datum_unosa, '%d/%m/%Y %H:%i:%s') AS datum_unosa,
-                        IF(p.tip_polise <> '2','individualno', 'grupno') AS tip_polise
-                    FROM
-                        polise AS p
-                            INNER JOIN
-                        osiguranici AS o ON p.nosioc_id = o.id
-                    ORDER BY " . $col . " " . $order;
+                    p.id AS polisa_id,
+                    o.id AS nosioc_id,
+                    o.puno_ime AS puno_ime,
+                    o.datum_rodjenja AS datum_rodjenja,
+                    o.broj_pasosa AS broj_pasosa,
+                    o.telefon AS telefon,
+                    o.email AS email,
+                    p.datum_polaska AS datum_polaska,
+                    p.datum_dolaska AS datum_dolaska,
+                    DATEDIFF(p.datum_dolaska, p.datum_polaska) AS broj_dana,
+                    p.datum_unosa AS datum_unosa,
+                    IF(p.tip_polise <> '2',
+                        'individualno',
+                        'grupno') AS tip_polise
+                FROM
+                    polise AS p
+                        INNER JOIN
+                    osiguranici AS o ON p.nosioc_id = o.id
+                ORDER BY " . $col . " " . $order;
 
             $stmt = $conn->prepare($query);
 
@@ -47,7 +49,7 @@ class PolisaRepository{
                 $nosioc = new Osiguranik();
                 $nosioc->id = $row->nosioc_id;
                 $nosioc->puno_ime = $row->puno_ime;
-                $nosioc->datum_rodjenja = $row->datum_rodjenja;
+                $nosioc->datum_rodjenja = date_format(date_create($row->datum_rodjenja), 'd/m/Y');
                 $nosioc->broj_pasosa = $row->broj_pasosa;
                 $nosioc->email = $row->email;
                 $nosioc->telefon = $row->telefon;
@@ -55,11 +57,11 @@ class PolisaRepository{
                 $polisa = new Polisa();
                 $polisa->nosioc = $nosioc;
                 $polisa->id = $row->polisa_id;
-                $polisa->datum_polaska = $row->datum_polaska;
-                $polisa->datum_dolaska = $row->datum_dolaska;
+                $polisa->datum_polaska = date_format(date_create($row->datum_polaska), 'd/m/Y');
+                $polisa->datum_dolaska = date_format(date_create($row->datum_dolaska), 'd/m/Y');
                 $polisa->tip_polise = $row->tip_polise;
                 $polisa->setBrojDana($row->broj_dana);
-                $polisa->datum_unosa = $row->datum_unosa;
+                $polisa->datum_unosa = date_format(date_create($row->datum_unosa), 'd/m/Y H:i:s');
 
                 $polise[] = $polisa;
             }
