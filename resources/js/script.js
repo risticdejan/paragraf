@@ -106,9 +106,9 @@ var Prijava = {
 
         this.removeError(e,true);
 
-        // validator = this.validateForm(config.form, rules);
+        validator = this.validateForm(config.form, rules);
 
-        // if (validator.form() && this.dateInterval) {
+        if (validator.form() && this.dateInterval) {
             $.ajax({
                 url: url,
                 data: data,
@@ -116,8 +116,8 @@ var Prijava = {
                 dataType: 'JSON'
             }).done(function (data) {
                 if(data.status === 'success'){
-                   //$form[0].reset();
-                    // window.location.href = data.url;
+                    $form[0].reset();
+                    window.location.href = data.url;
                 } else {
                     
                     for(let prop in data.error) {
@@ -139,7 +139,7 @@ var Prijava = {
                     };
                 }
             });
-        // }
+        }
 
         e.preventDefault();
         e.stopPropagation();

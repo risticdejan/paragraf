@@ -7,6 +7,10 @@ function set_active($path, $active = 'active', $inactive = 'inactive')
     return Request::is($path) ? $active  : $inactive;
 }
 
+function csrf_token(){
+    return md5(uniqid(rand().time(), TRUE));
+}
+
 function out($param, $default = ''){
     return isset($param) ? htmlspecialchars($param) : $default;
 }

@@ -20,10 +20,23 @@ class HomeController extends BaseController{
     }
 
     public function index() {
-        echo $this->render('page/index.php');
+        $token = csrf_token();
+
+        Session::set('token', $token);
+
+        echo $this->render('page/index.php',[
+            'token' => $token
+        ]);
     }
 
     public function store(){
+        if(Session::get('token') !== Request::input('token')) {
+            $this->json([
+                'error' => 'forbidden access'
+            ], 403);
+            die();
+        }
+
         $rules = [
             'puno_ime' => 'required|alphaspace|min:4|max:64',
             'datum_rodjenja' => 'required|date|datebefore:'.date("Y-m-d"),
