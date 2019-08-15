@@ -74,7 +74,7 @@ class PolisaService {
     private function cleanColParametar($col){
         $col = strtolower(trim($col));
         return (in_array($col,[
-            'puno_ime', 'datum_rodjenj', 'broj_pasosa',
+            'puno_ime', 'datum_rodjenja', 'broj_pasosa',
             'telefon', 'email', 'datum_polaska', 'datum_dolaska',
             'broj_dana', 'datum_unosa', 'tip_polise'
         ])) ? $col : 'datum_unosa';
