@@ -4,6 +4,8 @@
         <?php include_once VIEW_PATH.'/layout/head.php';?>
     </head>
     <body>
+        <?php include_once VIEW_PATH.'/layout/spinner.php';?>
+        
         <?php include_once VIEW_PATH.'/layout/navbar.php';?>
 
         <div class="container">

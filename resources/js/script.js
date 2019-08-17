@@ -22,6 +22,7 @@ var Prijava = {
     dateInterval: false,
 
     config: {
+        spinner: "#spinner-wrapper",
         addition: "#addition",
         additionButton: "#addition-button",
         indOpition: ".ind-opt",
@@ -102,19 +103,22 @@ var Prijava = {
                 $form = $(config.form),
                 data = $form.serialize(),
                 url = $form.attr('action'),
-                rules = config.rules ;
+                rules = config.rules,
+                $spinner = $(config.spinner);
 
         this.removeError(e,true);
 
         validator = this.validateForm(config.form, rules);
 
         if (validator.form() && this.dateInterval) {
+            $spinner.show()
             $.ajax({
                 url: url,
                 data: data,
                 type: 'POST',
                 dataType: 'JSON'
             }).done(function (data) {
+                $spinner.hide();
                 if(data.status === 'success'){
                     $form[0].reset();
                     window.location.href = data.url;
@@ -138,7 +142,9 @@ var Prijava = {
                         }
                     };
                 }
-            });
+            }).fail(function() {
+                $spinner.hide();
+            })
         }
 
         e.preventDefault();

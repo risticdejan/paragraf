@@ -1,5 +1,5 @@
 <div role="alert" aria-live="assertive" aria-atomic="true" class="toast <?php echo \Core\Session::get('toast')['className'];?>" 
-    data-autohide="false" style="position: fixed; top: 15px; right: 15px;">
+    data-autohide="false" style="position: fixed; top: 15px; left: 15px;">
     <div class="toast-header">
         <strong class="mr-auto">Pargraf lex</strong>
         
