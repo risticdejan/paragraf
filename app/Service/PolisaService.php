@@ -38,13 +38,16 @@ class PolisaService {
 
             $polisa = $this->polisaRepo->create($polisa);
 
-            if(!empty($request['osiguranik'])) {
-                $osiguranici = $this->osiguranikRepo
-                    ->createGrupnoOsiguraje($nosioc, $request['osiguranik']);
-                $polisa->nosioc->setOsiguranici($osiguranici);
+            if($polisa){
+                if(!empty($request['osiguranik'])) {
+                    $osiguranici = $this->osiguranikRepo
+                        ->createGrupnoOsiguraje($nosioc, $request['osiguranik']);
+                    $polisa->nosioc->setOsiguranici($osiguranici);
+                }
+    
+                return $this->get($polisa->id);
             }
-
-            return $this->get($polisa->id);
+            return null;
         }
 
         return null;

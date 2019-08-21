@@ -131,14 +131,18 @@ class OsiguranikRepository{
             
             $row = $stmt->fetch(\PDO::FETCH_OBJ);
 
-            $osiguranik = new Osiguranik();
-
-            $osiguranik->id = $row->id;
-            $osiguranik->puno_ime = $row->puno_ime;
-            $osiguranik->datum_rodjenja = $row->datum_rodjenja;
-            $osiguranik->broj_pasosa = $row->broj_pasosa;
-            $osiguranik->email = $row->email;
-            $osiguranik->telefon = $row->telefon;
+            if($row){
+                $osiguranik = new Osiguranik();
+    
+                $osiguranik->id = $row->id;
+                $osiguranik->puno_ime = $row->puno_ime;
+                $osiguranik->datum_rodjenja = $row->datum_rodjenja;
+                $osiguranik->broj_pasosa = $row->broj_pasosa;
+                $osiguranik->email = $row->email;
+                $osiguranik->telefon = $row->telefon;
+            } else {
+                $osiguranik = null;
+            }
 
             $stmt = null;
 
@@ -197,6 +201,8 @@ class OsiguranikRepository{
 
             $stmt = null;
 
+            if($nosioc->id == null) $nosioc = null;
+            
             return $nosioc;
         } catch(\PDOException $e) {
             if(DEBUG) { 
